@@ -1,0 +1,64 @@
+On Ruth's Sub
+{
+  "listOfAllowedLocations": {
+    "value": [
+      "canadacentral",
+      "westus2",
+      "northcentralus",
+      "eastus2",
+      "mexicocentral"
+    ]
+  }
+}
+
+Step 1 - Create the resource group 
+
+# Generate a random identifier
+$randomIdentifier = Get-Random -Minimum 10000 -Maximum 99999
+
+# Set variables
+$location = "canadacentral"
+$resourceGroup = "msdocs-rg-$randomIdentifier"
+
+# Create the resource group
+az group create `
+  --name $resourceGroup `
+  --location $location `
+  --output json
+
+
+
+Step 2 - Check the newly created RG
+
+az group list --output table
+
+
+Step 3 - Create the Storage Account
+
+$randomIdentifier = Get-Random -Minimum 100000 -Maximum 999999
+
+$location = "canadacentral"
+
+# Put your existing RG name here (or set $resourceGroup = "msdocs-rg-xxxxx")
+
+$resourceGroup = "msdocs-rg-75422"
+
+# Storage account name rules: lowercase letters and numbers only, 3-24 chars
+$storageAccount = "msdocssa$randomIdentifier"
+
+# -----------------------------
+# Create the storage account
+# -----------------------------
+Write-Host "Creating storage account $storageAccount in resource group $resourceGroup"
+
+az storage account create `
+  --name $storageAccount `
+  --resource-group $resourceGroup `
+  --location $location `
+  --sku Standard_RAGRS `
+  --kind StorageV2 `
+  --output json
+
+last step - Delete the RG
+
+az group delete --name <resource-group-name>

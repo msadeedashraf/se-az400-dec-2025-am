@@ -4,11 +4,19 @@
 - Create a resource group using variables:
   
 ```
-$randomIdentifier = (Get-Random) * (Get-Random)
-$location = "eastus"
+# Generate a random identifier
+$randomIdentifier = Get-Random -Minimum 10000 -Maximum 99999
+
+# Set variables
+$location = "westus2"
 $resourceGroup = "msdocs-rg-$randomIdentifier"
 
-az group create --name $resourceGroup --location $location --output json
+# Create the resource group
+az group create `
+  --name $resourceGroup `
+  --location $location `
+  --output json
+
 ```
 
 - To show the created resource
@@ -32,10 +40,11 @@ az resource list --resource-group $resourceGroup --output table
 ```
 $randomIdentifier = Get-Random -Minimum 100000 -Maximum 999999
 
-$location = "westus2"
+$location = "westus"
 
 # Put your existing RG name here (or set $resourceGroup = "msdocs-rg-xxxxx")
-$resourceGroup = "msdocs-rg-0000000"
+
+$resourceGroup = "msdocs-rg-29892"
 
 # Storage account name rules: lowercase letters and numbers only, 3-24 chars
 $storageAccount = "msdocssa$randomIdentifier"
@@ -53,5 +62,40 @@ az storage account create `
   --kind StorageV2 `
   --output json
 
+
+```
+
+## How to find the allowed regions
+
+```
+az policy assignment list --query "[].{name:name, displayName:displayName, scope:scope}" -o table
+
+```
+
+- To find the scope value
+![scope](/Assets/to-get-scope.png)
+
+- update the actual scope value from you cmd shell
+
+```
+$assignmentId = az policy assignment list --scope /subscriptions/77fd2e99-e14f-42c6-a054-bf277c8b683c --query "[?name=='sys.regionrestriction'].id | [0]" -o tsv
+$assignmentId
+
+```
+
+- To see the allowed list of region in you subscription
   
+```
+az policy assignment list `
+  --scope /subscriptions/77fd2e99-e14f-42c6-a054-bf277c8b683c `
+  --query "[?name=='sys.regionrestriction'].parameters | [0]" `
+  -o jsonc
+```
+
+- or 
+
+```
+# Common parameter name in many built-ins:
+az policy assignment list --scope /subscriptions/77fd2e99-e14f-42c6-a054-bf277c8b683c --query "[?name=='sys.regionrestriction'].parameters.listOfAllowedLocations.value | [0]" -o jsonc
+
 ```
