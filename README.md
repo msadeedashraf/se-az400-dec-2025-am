@@ -1,6 +1,5 @@
 # az400-04-2025-pm
 
-
 ### Microsoft Learn AZ400
 
 #### Labs
