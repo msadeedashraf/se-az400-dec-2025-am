@@ -2,6 +2,8 @@
 
 ### Microsoft Learn AZ400
 
+[Book](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-400/)
+
 #### Labs
 [AZ-400: Development for Enterprise DevOps](https://learn.microsoft.com/en-us/training/paths/az-400-work-git-for-enterprise-devops/)
 

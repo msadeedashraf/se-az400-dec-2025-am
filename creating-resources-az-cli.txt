@@ -61,4 +61,14 @@ az storage account create `
 
 last step - Delete the RG
 
-az group delete --name <resource-group-name>
+az group delete --name <msdocs-rg-0000000> --no-wait
+
+az group delete --name msdocs-rg-75422 --no-wait
+
+az group delete --name msdocs-rg-58903 --no-wait
+
+az group delete --name msdocs-rg-29892 --no-wait
+
+
+msdocs-rg-58903 
+msdocs-rg-29892

@@ -65,6 +65,17 @@ az storage account create `
 
 ```
 
+# Clean up resources
+
+```
+# Get a list of resource groups in the active subscription
+az group list --output table
+
+# Delete a resource group and do not wait for the operation to finish
+az group delete --name <msdocs-rg-0000000> --no-wait
+
+```
+
 ## How to find the allowed regions
 
 ```
